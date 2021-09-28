@@ -1,0 +1,14 @@
+{
+  "name": "poc-express",
+  "version": "1.0.0",
+  "description": "POC de uso do fw express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Guilherme Leal <lealhugui@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
