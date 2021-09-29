@@ -1,42 +1,28 @@
+const {Model, DataTypes} = require('sequelize');
+const {sequelize} = require('../db')
 
-const allUsers = [{
-    id: 1,
-    userName: 'Foo'
-}, {
-    id: 2,
-    userName: 'Bar'
-}]
+class User extends Model {}
+User.init({
+    userName: DataTypes.STRING
+}, { sequelize, modelName: 'user' });
+
+User.sync()
 
 async function _getAllUsers() {
-    return allUsers
+    return User.findAll()
 }
 
 async function _getSingleUser(id) {
-    const userFound = allUsers.filter( (user) => {
-        return user.id == id
-    })
-
-    if (userFound && userFound.length) {
-        return userFound[0]
-    }
-    return {}
+    return User.findByPk(id)
 }
 
 async function _createUser(userObj) {
     if (!userObj.userName) {
         throw new Error('Parametros invalidos')
     }
-    const usuarioExiste = allUsers.filter(u => u.userName == userObj.userName)
-    if (usuarioExiste.length) {
-        throw new Error('Usuario ja existe')
-    }
 
-    const newUser = {
-        id: allUsers.length + 1,
-        userName: userObj.userName
-    }
-
-    allUsers.push(newUser)
+    const newUser = await User.create({userName: userObj.userName})
+    console.log(newUser)
 
     return newUser
 }

@@ -1,5 +1,8 @@
 const express = require('express')
+// const {sequelize} = require('./db')
 const { getAllUsers, getSingleUser, createUser } = require('./src/usuarios/index')
+
+
 
 const app = express()
 app.use(express.json());
@@ -26,3 +29,5 @@ const port = 3000
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+
+
