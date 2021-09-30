@@ -9,5 +9,63 @@
 </head>
 <body>
     <h1>Minha Pagina estatica pelo ExpressJS</h1>
+
+    <input type="text" id="nome" ><button onclick="incluirUsuario()">Incluir</button>
+
+    <div id="exemplo-api"></div>
+
+    <script>
+        
+        function incluirUsuario() {
+            const incluir = async () => {
+                const input = document.getElementById('nome')
+                if (!input.value) {
+                    alert('Nome inválido')
+                    return
+                }
+                if (input.value.includes('@')) {
+                    alert('Nome inválido2')
+                    return
+                }
+
+                const req = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        userName: input.value
+                    })
+                }
+                const response = await fetch('/api/users', req)
+                await carregar()
+            }
+
+            incluir()
+        }
+
+        async function carregar() {
+            
+            const response = await fetch('/api/users')
+
+
+
+            const data = await response.json()
+            
+            console.log(data)
+            const container = document.getElementById('exemplo-api')
+            let innerTable = []
+            for (const u of data) {
+                innerTable.push(`<tr><td>${u.id}</td><td>${u.userName}</td></tr>`)
+            }
+
+            container.innerHTML = `<table>${innerTable.join('')}</table>`
+            
+        }
+
+        carregar()
+        
+    </script>
+
 </body>
 </html>
